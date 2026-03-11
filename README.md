@@ -8,7 +8,7 @@ This build focuses on **smooth on-device UI**, **low RAM usage**, and **hands‑
 > Credits / lineage  
 > - Original concept/UI: **ESP32 WiFi Hash Monster** (by @g4lile0)  
 > - Based largely on: **PacketMonitor32** (by @Spacehuhn)  
-> - CYD touch port + UI changes: **ported by @ATOMNFT**
+> - CYD touch port by @ATOMNFT**
 
 ![Alt text](Images/cyd-whm-port.png "Optional title")
 
