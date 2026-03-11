@@ -14,6 +14,13 @@ This build focuses on **smooth on-device UI**, **low RAM usage**, and **hands‑
 
 ---
 
+## Flasher Tool
+<a href="https://atomnft.github.io/CYD-WiFi-Hash-Monster-Port-Flasher/flash0.html" target="_blank" rel="noopener noreferrer">
+  <img src="Images/flash-button.png" alt="Flash Now" width="200" height="140">
+</a>
+
+---
+
 ## Features
 
 ### Touch UI (no buttons)
