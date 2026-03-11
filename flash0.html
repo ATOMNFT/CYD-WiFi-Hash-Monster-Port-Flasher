@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>WiFi-Hash-Monster-CYD-Port-Flasher</title>
+  <link rel="icon" href="Images/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Easily allows users to install G4lile0's WiFi Hash Monster onto a CYD." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+
+  <style>
+    :root {
+      --bg: #0d0b14;
+      --bg-soft: #120f1e;
+      --panel: rgba(138, 43, 226, 0.08);
+      --panel-strong: rgba(138, 43, 226, 0.15);
+      --accent: #39ff14;
+      --accent-soft: #7dff5a;
+      --accent-bright: #aaff88;
+      --accent-glow: rgba(57, 255, 20, 0.4);
+      --purple: #9b30ff;
+      --purple-soft: #bf7fff;
+      --purple-glow: rgba(155, 48, 255, 0.45);
+      --text: #f0eeff;
+      --text-soft: #cdc5e8;
+      --border: rgba(155, 48, 255, 0.55);
+      --border-green: rgba(57, 255, 20, 0.4);
+      --shadow: 0 0 24px rgba(155, 48, 255, 0.22);
+      --shadow-green: 0 0 20px rgba(57, 255, 20, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, sans-serif;
+      padding: 0;
+      margin: 0;
+      line-height: 1.5;
+      background:
+        radial-gradient(ellipse at top left, rgba(155, 48, 255, 0.18) 0%, transparent 45%),
+        radial-gradient(ellipse at bottom right, rgba(57, 255, 20, 0.08) 0%, transparent 45%),
+        linear-gradient(180deg, #0d0b14 0%, #0a0812 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Subtle animated shimmer across the top */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple), var(--accent), var(--purple), transparent);
+      opacity: 0.7;
+      animation: shimmer 4s ease-in-out infinite;
+      z-index: 999;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.9; }
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+      text-align: center;
+    }
+
+    .logo {
+      max-width: 700px;
+      width: 100%;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .intro-text {
+      font-size: 20px;
+      color: var(--accent-soft);
+      text-shadow: 0 0 14px rgba(57, 255, 20, 0.3), 0 0 30px rgba(57, 255, 20, 0.1);
+      margin: 0;
+    }
+
+    /* ── Hero Card ── */
+    .hero-card {
+      text-align: center;
+      margin: 20px auto 28px;
+      max-width: 700px;
+      padding: 22px 24px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: linear-gradient(
+        135deg,
+        rgba(138, 43, 226, 0.12) 0%,
+        rgba(20, 10, 40, 0.6) 50%,
+        rgba(57, 255, 20, 0.06) 100%
+      );
+      box-shadow:
+        var(--shadow),
+        var(--shadow-green),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 0 40px rgba(155, 48, 255, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background-image: url('Images/usb-plug.gif');
+      background-size: 12% auto;
+      background-position: left 12px top 10px;
+      background-repeat: no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Corner glow accent */
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(57, 255, 20, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.5px;
+      position: relative;
+      display: inline-block;
+
+      /* Animated gradient text */
+      background: linear-gradient(
+        90deg,
+        #39ff14 0%,
+        #aaff88 20%,
+        #bf7fff 40%,
+        #9b30ff 55%,
+        #39ff14 70%,
+        #aaff88 85%,
+        #9b30ff 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientFlow 4s linear infinite;
+    }
+
+    /* Pseudo-element glitch layers */
+    .hero-card h2::before,
+    .hero-card h2::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      background: inherit;
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-card h2::before {
+      animation: glitch1 3.5s infinite steps(1);
+      clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+      transform: translateX(0);
+      opacity: 0;
+    }
+
+    .hero-card h2::after {
+      animation: glitch2 4.2s infinite steps(1);
+      clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+      transform: translateX(0);
+      opacity: 0;
+    }
+
+    @keyframes gradientFlow {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    @keyframes glitch1 {
+      0%,  92% { opacity: 0; transform: translateX(0); }
+      93%       { opacity: 1; transform: translateX(-3px); -webkit-text-fill-color: #bf7fff; }
+      94%       { opacity: 1; transform: translateX(3px);  -webkit-text-fill-color: #39ff14; }
+      95%       { opacity: 1; transform: translateX(-2px); -webkit-text-fill-color: #bf7fff; }
+      96%, 100% { opacity: 0; transform: translateX(0); }
+    }
+
+    @keyframes glitch2 {
+      0%,  88% { opacity: 0; transform: translateX(0); }
+      89%       { opacity: 1; transform: translateX(4px);  -webkit-text-fill-color: #39ff14; }
+      90%       { opacity: 1; transform: translateX(-3px); -webkit-text-fill-color: #9b30ff; }
+      91%, 100% { opacity: 0; transform: translateX(0); }
+    }
+
+    .hero-card p {
+      color: var(--text-soft);
+      font-size: 16px;
+      margin: 0;
+    }
+
+    /* ── Fieldset Row ── */
+    .fieldset-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    fieldset {
+      min-width: 300px;
+      max-width: 420px;
+      margin: 0;
+      padding: 20px;
+      border-radius: 22px;
+      background: linear-gradient(
+        135deg,
+        rgba(155, 48, 255, 0.14) 0%,
+        rgba(10, 8, 20, 0.7) 100%
+      );
+      border: 1px solid var(--border);
+      box-shadow:
+        var(--shadow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        inset 0 0 30px rgba(155, 48, 255, 0.05);
+      display: inline-block;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    fieldset:hover {
+      border-color: rgba(57, 255, 20, 0.5);
+      box-shadow:
+        var(--shadow),
+        var(--shadow-green),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+
+    legend {
+      font-size: 20px;
+      text-align: center;
+      font-weight: 800;
+      background: linear-gradient(135deg, rgba(155, 48, 255, 0.25), rgba(57, 255, 20, 0.1));
+      border: 1px solid rgba(155, 48, 255, 0.5);
+      border-radius: 14px;
+      padding: 10px 20px;
+      color: var(--purple-soft);
+      text-shadow: 0 0 12px rgba(155, 48, 255, 0.5);
+      box-shadow:
+        0 0 14px rgba(155, 48, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(155, 48, 255, 0.4);
+      background: linear-gradient(135deg, rgba(20, 10, 40, 0.9), rgba(13, 8, 28, 0.95));
+      color: var(--text);
+      font-size: 16px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.03),
+        0 0 10px rgba(155, 48, 255, 0.08);
+      transition: 0.25s ease;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239b30ff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    select:hover {
+      border-color: var(--accent);
+      box-shadow:
+        0 0 16px rgba(57, 255, 20, 0.2),
+        inset 0 0 12px rgba(57, 255, 20, 0.04);
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow:
+        0 0 0 3px rgba(57, 255, 20, 0.15),
+        0 0 20px rgba(57, 255, 20, 0.2);
+    }
+
+    /* ── Install Button Row ── */
+    .button-row {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .install-shell {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 240px;
+      min-height: 64px;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border-green);
+      background: linear-gradient(
+        135deg,
+        rgba(57, 255, 20, 0.1) 0%,
+        rgba(155, 48, 255, 0.1) 100%
+      );
+      box-shadow:
+        0 0 24px rgba(57, 255, 20, 0.15),
+        0 0 40px rgba(155, 48, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        inset 0 0 20px rgba(57, 255, 20, 0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    esp-web-install-button {
+      --esp-tools-button-color: #0a1a04;
+      --esp-tools-button-background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+      --esp-tools-button-hover-background: linear-gradient(180deg, #ccffaa, #5aff2a);
+      --esp-tools-button-active-background: linear-gradient(180deg, #5aff2a, #2dd400);
+      --esp-tools-button-border-radius: 14px;
+      --esp-tools-button-font-size: 16px;
+      --esp-tools-button-padding: 14px 22px;
+    }
+
+    .invisible {
+      visibility: hidden;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    esp-web-install-button[install-unsupported] {
+      visibility: inherit;
+    }
+
+    a {
+      color: var(--accent-soft);
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      color: var(--text-soft);
+      margin-top: 70px;
+      border-top: 1px solid rgba(155, 48, 255, 0.3);
+      padding: 28px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      background: linear-gradient(
+        0deg,
+        rgba(155, 48, 255, 0.06) 0%,
+        transparent 100%
+      );
+    }
+
+    .footer-main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .made-by {
+      color: var(--purple-soft);
+      font-size: 14px;
+      letter-spacing: 0.4px;
+    }
+
+    #visitor-counter {
+      color: var(--accent-soft);
+      font-size: 14px;
+      margin-top: 4px;
+      text-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+    }
+
+    /* ── Floating orbs for depth ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(80px);
+      opacity: 0.25;
+    }
+
+    .orb-purple {
+      width: 400px; height: 400px;
+      top: -100px; left: -100px;
+      background: var(--purple);
+    }
+
+    .orb-green {
+      width: 300px; height: 300px;
+      bottom: -80px; right: -80px;
+      background: var(--accent);
+      opacity: 0.12;
+    }
+
+    @media (max-width: 768px) {
+      .intro-text {
+        font-size: 18px;
+      }
+
+      .hero-card {
+        background-size: 48px auto;
+        background-position: left 10px top 10px;
+      }
+
+      legend {
+        font-size: 17px;
+      }
+
+      .orb { display: none; }
+    }
+  </style>
+
+  <script type="module" src="https://unpkg.com/esp-web-tools@8.0.1/dist/web/install-button.js?module"></script>
+</head>
+<body>
+
+  <!-- Background depth orbs -->
+  <div class="orb orb-purple"></div>
+  <div class="orb orb-green"></div>
+
+  <div class="page">
+    <img src="Images/flasherheader.png" alt="Logo" class="logo">
+
+    <div class="wrapper">
+      <p class="intro-text">
+        This utility is designed to flash G4lile0's WiFi Hash Monster onto a CYD ESP32-2432S028.
+      </p>
+    </div>
+
+    <div class="hero-card">
+      <h2 data-text="G4lile0's WiFi Hash Monster CYD Port Flasher">G4lile0's WiFi Hash Monster CYD Port Flasher</h2>
+      <p>
+        Your gateway to effortlessly installing G4lile0's WiFi Hash Monster onto a CYD firmware.
+        Designed with a sleek web interface, it transforms firmware flashing into a fast,
+        hassle-free experience.
+      </p>
+    </div>
+
+    <div class="fieldset-row">
+      <fieldset>
+        <legend>W.H.M Port CYD</legend>
+        <select id="select-WiFi-Hash-Monster-Port-CYD">
+          <option value="" selected disabled>Micro USB</option>
+          <option value="WiFi-Hash-Monster-Port-CYD">WiFi Hash Monster Port CYD</option>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <legend>W.H.M Port CYD2USB</legend>
+        <select id="select-WiFi-Hash-Monster-Port-CYD2USB">
+          <option value="" selected disabled>Micro + USB-C</option>
+          <option value="WiFi-Hash-Monster-Port-CYD2USB">WiFi Hash Monster Port CYD2USB</option>
+        </select>
+      </fieldset>
+    </div>
+
+    <div class="button-row">
+      <div class="install-shell">
+        <esp-web-install-button class="invisible"></esp-web-install-button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('select-WiFi-Hash-Monster-Port-CYD').addEventListener('change', (event) => {
+      const button = document.querySelector('esp-web-install-button');
+      button.manifest = `web/manifest_${event.target.value}.json`;
+      button.classList.remove('invisible');
+    });
+
+    document.getElementById('select-WiFi-Hash-Monster-Port-CYD2USB').addEventListener('change', (event) => {
+      const button = document.querySelector('esp-web-install-button');
+      button.manifest = `web/manifest_${event.target.value}.json`;
+      button.classList.remove('invisible');
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        if (localStorage.getItem('page_view_count')) {
+          localStorage.setItem('page_view_count', Number(localStorage.getItem('page_view_count')) + 1);
+        } else {
+          localStorage.setItem('page_view_count', 1);
+        }
+        const counter = document.getElementById('visitor-counter');
+        if (counter) {
+          counter.innerText = `Visitor count: ${localStorage.getItem('page_view_count')}`;
+        }
+      } catch(e) {}
+    });
+  </script>
+
+  <div class="footer">
+    <div class="footer-main">
+      <span>✨ <a href="">G4lile0's WiFi Hash Monster, CYD Port by ATOMNFT</a></span>
+      <span>|</span>
+      <span>Installer powered by <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a> 🛠️</span>
+      <span>|</span>
+      <span class="made-by">
+        Flasher made with ❤️ by <a href="https://github.com/ATOMNFT" target="_blank" rel="noopener noreferrer">ATOMNFT</a>
+      </span>
+    </div>
+
+    <div id="visitor-counter"></div>
+  </div>
+
+</body>
+</html>
