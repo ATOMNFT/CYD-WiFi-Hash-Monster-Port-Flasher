@@ -6,7 +6,7 @@ A lightweight, touch‑driven port of **ESP32 WiFi Hash Monster** for the **Chea
 This build focuses on **smooth on-device UI**, **low RAM usage**, and **hands‑on scanning/wardriving workflows** (channel hop, SD logging, EAPOL/deauth counters, RSSI graphing).
 
 > Credits / lineage  
-> - Original concept/UI: **ESP32 WiFi Hash Monster** (by @g4lile0)  
+> - Original project by [Galile0 (G4lile0)](https://github.com/G4lile0/ESP32-WiFi-Hash-Monster)  
 > - Based largely on: **PacketMonitor32** (by @Spacehuhn)  
 > - CYD touch port by @ATOMNFT**
 
