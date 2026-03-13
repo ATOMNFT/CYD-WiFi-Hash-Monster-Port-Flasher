@@ -2,5 +2,5 @@
   "name": "CYD-WiFi-Hash-Monster-Port-Flasher",
   "version": "1.0",
   "description": "A simple flasher tool for G4lile0's WiFi Hash Monster. This tools allows you to flash the firmware onto a CYD.",
-  "icon": "Images/-icon.png"
+  "icon": "Images/cyd-icon.png"
 }
